@@ -1,14 +1,12 @@
 import React, { createContext, useReducer } from 'react';
 import ComA from './ComA';
 
-export const appContext = createContext();
-
-const iState = {
-  name: 'anshu',
+const istate = {
+  name: 'anshuman',
   age: 27,
-  profession: 'software engineer',
   count: 0,
 };
+export const AppContext = createContext();
 
 const reducer = (state, action) => {
   if (action.type === 'CHANGE_NAME') {
@@ -17,7 +15,7 @@ const reducer = (state, action) => {
       name: action.payload,
     };
   }
-  if (action.type === 'INCREASE_COUNT') {
+  if (action.type === 'INCREASE') {
     return {
       ...state,
       count: state.count + 1,
@@ -25,24 +23,23 @@ const reducer = (state, action) => {
   }
   return state;
 };
+
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, iState);
+  const [person, dispatch] = useReducer(reducer, istate);
 
-  const changeName = () => {
-    dispatch({ type: 'CHANGE_NAME', payload: 'anshuman' });
+  const ChangeName = () => {
+    dispatch({ type: 'CHANGE_NAME', payload: 'avinash' });
   };
-
-  const incrCount = () => {
+  const IncreaseCount = () => {
     setTimeout(() => {
-      dispatch({ type: 'INCREASE_COUNT' });
+      dispatch({ type: 'INCREASE' });
     }, 3000);
   };
-
   return (
     <>
-      <appContext.Provider value={{ ...state, changeName, incrCount }}>
+      <AppContext.Provider value={{ ...person, ChangeName, IncreaseCount }}>
         <ComA />
-      </appContext.Provider>
+      </AppContext.Provider>
     </>
   );
 };
